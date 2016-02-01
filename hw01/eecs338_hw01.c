@@ -17,6 +17,10 @@ int main(void) {
     getP0Info();
     putenv("WHALE=7");
     forkProcesses();
+
+    int whale = atoi(getenv("WHALE"));
+    printf("P0: %d\n", whale);
+
     return 0;
 }
 // Prints an error message and exits if one occurs. Else, returns the system call value.
@@ -76,6 +80,27 @@ void getP0Info() {
     printf("Current working directory: %s\n", getcwd_wrapper());
 }
 
+char* int2Str(int num) {
+    switch(num) {
+        case 6:
+            return "6";
+        case 5:
+            return "5";
+        case 4:
+            return "4";
+        case 3:
+            return "3";
+        case 2:
+            return "2";
+        case 1:
+            return "1";
+        case 0:
+            return "0";
+        default:
+            return "-1";
+    }
+}
+
 void forkProcesses() {
     
     pid_t child1_pid = print_if_err(fork(), "fork");
@@ -87,7 +112,7 @@ void forkProcesses() {
         sleep(1);
         int whale = atoi(getenv("WHALE"));
         printf("C1: %d\n", whale);
-                
+        _exit(0);                
     }
     
     pid_t child2_pid = print_if_err(fork(), "fork");
