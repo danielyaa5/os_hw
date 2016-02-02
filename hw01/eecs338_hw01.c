@@ -38,7 +38,7 @@ int main(void) {
     whale = 0;
     sprintf(new_whale, "%d", whale);
     setenv("WHALE", new_whale, 1);
-    printf("PO: %d\n", whale);
+    printf("PO: %d shrimp (WHALE environment variable is now %d)\n", whale, whale);
     fflush(stdout);
     fflush(stderr);
     return 0;
@@ -115,7 +115,7 @@ void forkProcesses() {
         char new_whale[50];
         sprintf(new_whale, "%d", whale);
         setenv("WHALE", new_whale, 1);
-        printf("C1: %d\n", whale);
+        printf("C1: %d shrimp (WHALE environment variable is now %d)\n", whale, whale);
         fflush(stderr);
         fflush(stdout);
         while(whale > 3) {
@@ -157,7 +157,7 @@ void forkProcesses() {
             whale = whale - 3;
             sprintf(new_whale, "%d", whale);
             setenv("WHALE", new_whale, 1);
-            printf("C2: %d\n", whale);    
+            printf("C2: %d shrimp (WHALE environment variable is now %d)\n", whale, whale);    
         }
         
         sleep(2);
