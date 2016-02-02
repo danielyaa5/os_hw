@@ -17,7 +17,7 @@ int main(void) {
     
     int whale = atoi(getenv("WHALE"));
     sleep(1);
-    printf("P0: %d\n", whale);
+    printf("PO: %d shrimp (WHALE environment variable is now %d)\n", whale, whale);
     char new_whale[50];
 
     while (whale > 1) {
@@ -25,7 +25,7 @@ int main(void) {
         whale = whale - 3;
         sprintf(new_whale, "%d", whale);
         setenv("WHALE", new_whale, 1);
-        printf("P0: %d\n", whale);
+        printf("PO: %d shrimp (WHALE environment variable is now %d)\n", whale, whale);
     }
 
     pid_t pid;
@@ -123,8 +123,7 @@ void forkProcesses() {
             whale = whale - 3;
             sprintf(new_whale, "%d", whale);
             setenv("WHALE", new_whale, 1);
-            printf("C1: %d\n", whale);
-                
+            printf("C1: %d shrimp (WHALE environment variable is now %d)\n", whale, whale);
         }
         
         fflush(stderr);
@@ -150,7 +149,7 @@ void forkProcesses() {
         char new_whale[50];
         sprintf(new_whale, "%d", whale);
         setenv("WHALE", new_whale, 1);
-        printf("C2: %d\n", whale);
+        printf("C2: %d shrimp (WHALE environment variable is now %d)\n", whale, whale);        
         
         while(whale > 2) {
             sleep(3);
