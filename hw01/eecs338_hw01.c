@@ -10,19 +10,40 @@
 #include <sys/resource.h>
 #include <time.h>
 
-// user defined constants
-#define SLEEP_LENGTH 1
-
 int main(void) {
     getP0Info();
     putenv("WHALE=7");
     forkProcesses();
-
+    
     int whale = atoi(getenv("WHALE"));
+    sleep(1);
     printf("P0: %d\n", whale);
+    char new_whale[50];
 
+    while (whale > 1) {
+        sleep(3);
+        whale = whale - 3;
+        sprintf(new_whale, "%d", whale);
+        setenv("WHALE", new_whale, 1);
+        printf("P0: %d\n", whale);
+    }
+
+    pid_t pid;
+    while (pid = waitpid(-1, NULL, 0)) {
+        if (errno == ECHILD) {
+            perror("waitpid");
+            break;
+        }
+    }
+    whale = 0;
+    sprintf(new_whale, "%d", whale);
+    setenv("WHALE", new_whale, 1);
+    printf("PO: %d\n", whale);
+    fflush(stdout);
+    fflush(stderr);
     return 0;
 }
+
 // Prints an error message and exits if one occurs. Else, returns the system call value.
 int print_if_err(int syscall_val, const char* syscall_name) {
     if (syscall_val < 0) {
@@ -80,46 +101,70 @@ void getP0Info() {
     printf("Current working directory: %s\n", getcwd_wrapper());
 }
 
-char* int2Str(int num) {
-    switch(num) {
-        case 6:
-            return "6";
-        case 5:
-            return "5";
-        case 4:
-            return "4";
-        case 3:
-            return "3";
-        case 2:
-            return "2";
-        case 1:
-            return "1";
-        case 0:
-            return "0";
-        default:
-            return "-1";
-    }
-}
-
 void forkProcesses() {
     
     pid_t child1_pid = print_if_err(fork(), "fork");
     if (child1_pid == 0) {
         printf("\nChild Process 1\n");
         printf("Process ID: %d\n", getpid());
-        printf("Parent Process ID: %d\n", getppid());
-        
-        sleep(1);
-        int whale = atoi(getenv("WHALE"));
+        printf("Parent Process ID: %d\n", getppid()); 
+        fflush(stdout);
+        fflush(stderr);
+        sleep(2);
+        int whale = 6;
+        char new_whale[50];
+        sprintf(new_whale, "%d", whale);
+        setenv("WHALE", new_whale, 1);
         printf("C1: %d\n", whale);
+        fflush(stderr);
+        fflush(stdout);
+        while(whale > 3) {
+            sleep(3);
+            whale = whale - 3;
+            sprintf(new_whale, "%d", whale);
+            setenv("WHALE", new_whale, 1);
+            printf("C1: %d\n", whale);
+                
+        }
+        
+        fflush(stderr);
+        fflush(stdout);
+        sleep(3);
+        printf("\n");
+        print_if_err(chdir("/"), "chdir");
+        printf("C1: executing ls command\n");
+        execl("/bin/ls", "ls", "-l", "-a", NULL);
+        fflush(stdout);
+        fflush(stderr);
         _exit(0);                
     }
-    
+        
     pid_t child2_pid = print_if_err(fork(), "fork");
     if (child2_pid == 0) {
         printf("\nChild Process 2\n");
         printf("Process ID: %d\n", getpid());
         printf("Parent Process ID: %d\n", getppid());
     
+        sleep(3);
+        int whale = 5;
+        char new_whale[50];
+        sprintf(new_whale, "%d", whale);
+        setenv("WHALE", new_whale, 1);
+        printf("C2: %d\n", whale);
+        
+        while(whale > 2) {
+            sleep(3);
+            whale = whale - 3;
+            sprintf(new_whale, "%d", whale);
+            setenv("WHALE", new_whale, 1);
+            printf("C2: %d\n", whale);    
+        }
+        
+        sleep(2);
+        printf("C2: getting cwd\n");
+        printf("C2 CWD: %s\n", getcwd_wrapper());
+        fflush(stdout);
+        fflush(stderr);
+        _exit(0);
     }
 }
