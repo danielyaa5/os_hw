@@ -1,0 +1,57 @@
+P0 Initial Info
+Process ID: 30744
+Parent Process ID: 30032
+Hostname: eecslinab3
+Username: djy18
+Current time: Tue Feb  2 18:18:07 2016
+Current working directory: /home/djy18/os_hw/hw01
+
+Child Process 2
+Process ID: 30746
+Parent Process ID: 30744
+
+Child Process 1
+Process ID: 30745
+Parent Process ID: 30744
+PO: 7 shrimp (WHALE environment variable is now 7)
+C1: 6 shrimp (WHALE environment variable is now 6)
+C2: 5 shrimp (WHALE environment variable is now 5)
+PO: 4 shrimp (WHALE environment variable is now 4)
+C1: 3 shrimp (WHALE environment variable is now 3)
+C2: 2 shrimp (WHALE environment variable is now 2)
+PO: 1 shrimp (WHALE environment variable is now 1)
+C2: getting cwd
+C2 CWD: /home/djy18/os_hw/hw01
+
+C1: executing ls command
+total 112
+drwxr-xr-x  23 root root  4096 Jan 12 15:25 .
+drwxr-xr-x  23 root root  4096 Jan 12 15:25 ..
+drwxr-xr-x   2 root root  4096 Aug 19 15:22 bin
+drwxr-xr-x   3 root root  4096 Jan 27 16:47 boot
+drwxr-xr-x   2 root root  4096 Apr  2  2013 cdrom
+drwxr-xr-x  14 root root  4200 Jan 27 16:45 dev
+drwxr-xr-x 130 root root 12288 Feb  2 17:46 etc
+drwxr-xr-x 286 root root 12288 Feb  2 17:54 home
+lrwxrwxrwx   1 root root    33 Jan 12 15:25 initrd.img -> boot/initrd.img-3.13.0-74-generic
+lrwxrwxrwx   1 root root    33 Nov 24 23:25 initrd.img.old -> boot/initrd.img-3.13.0-68-generic
+drwxr-xr-x  23 root root  4096 Aug 19 15:24 lib
+drwx------   2 root root 16384 Apr  2  2013 lost+found
+drwxr-xr-x   3 root root  4096 Apr  2  2013 media
+drwxr-xr-x   2 root root  4096 Apr 19  2012 mnt
+drwxr-xr-x   2 root root  4096 Feb 13  2013 opt
+dr-xr-xr-x 363 root root     0 Jan 27 16:45 proc
+drwx------   4 root root  4096 Mar 25  2015 root
+drwxr-xr-x  24 root root  1000 Feb  2 18:15 run
+drwxr-xr-x   2 root root 12288 Jan 13 10:10 sbin
+drwxr-xr-x   2 root root  4096 Mar  5  2012 selinux
+drwxr-xr-x   2 root root  4096 Feb 13  2013 srv
+dr-xr-xr-x  13 root root     0 Jan 27 16:45 sys
+drwxrwxrwt  15 root root  4096 Feb  2 18:18 tmp
+drwxr-xr-x  10 root root  4096 Feb 13  2013 usr
+drwxr-xr-x  17 root root  4096 Jan 12 15:53 var
+lrwxrwxrwx   1 root root    30 Jan 12 15:25 vmlinuz -> boot/vmlinuz-3.13.0-74-generic
+lrwxrwxrwx   1 root root    30 Nov 24 23:25 vmlinuz.old -> boot/vmlinuz-3.13.0-68-generic
+waitpid: No child processes
+PO: 0 shrimp (WHALE environment variable is now 0)
+
