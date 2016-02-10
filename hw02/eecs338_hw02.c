@@ -15,7 +15,7 @@ const int NUM_OF_REDUCERS = 26;
 
 const int PIPE_READ_END = 0;
 const int PIPE_WRITE_END = 1;
-const int PIPE_BUFFER_SIZE = 32;
+const int PIPE_BUFFER_SIZE = 1000;
 
 int mapper_pipes[4][2];
 int reducer_pipes[26][2];
@@ -63,12 +63,10 @@ void fork_mappers(void) {
     int i;
     for (i=0; i<NUM_OF_MAPPERS; i++) {
         pid_t mapper_pid = print_if_err(fork(), "fork");
-        printf("%d\n", mapper_pid);
         if (mapper_pid == 0) {
-            printf("hello from mapper\n");
             rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             while(rlen > 0) {    
-                printf("forked mapper read line: %s\n", ibuf);
+                printf("read line from forked_mappers, p%d: %s\n", i, ibuf);
                 rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             }
             _exit(0);
@@ -97,7 +95,7 @@ void send_lines_to_mappers(void) {
     FILE *input_file = fopen("input.txt", "r");
     // read the input file line by line
     while(fgets(buff, BUFFER_SIZE, input_file) > 0) {
-        printf("read line: %s\n", buff);
+        printf("read line from send_lin_to_mappers: %s\n", buff);
         ob_size = sizeof buff;
         switch(count) {
             case 0 :
