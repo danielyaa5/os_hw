@@ -65,7 +65,7 @@ void fork_mappers(void) {
         pid_t mapper_pid = print_if_err(fork(), "fork");
         printf("%d\n", mapper_pid);
         if (mapper_pid == 0) {
-            printf("hello from mapper/n");
+            printf("hello from mapper\n");
             rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             while(rlen > 0) {    
                 printf("forked mapper read line: %s\n", ibuf);
@@ -90,7 +90,7 @@ void fork_reducers(void) {
 void send_lines_to_mappers(void) {
     int wlen = 0;
     char obuf[PIPE_BUFFER_SIZE];
-    int obptr = 0;
+    int ob_size;
     int count = 0;
 
     char buff[BUFFER_SIZE]; // a buffer for each line of the file
@@ -98,18 +98,19 @@ void send_lines_to_mappers(void) {
     // read the input file line by line
     while(fgets(buff, BUFFER_SIZE, input_file) > 0) {
         printf("read line: %s\n", buff);
+        ob_size = sizeof buff;
         switch(count) {
             case 0 :
-                write(mapper_pipes[0][PIPE_WRITE_END], obuf, obptr);
+                write(mapper_pipes[0][PIPE_WRITE_END], buff, ob_size);
                 break;
             case 1 : 
-                write(mapper_pipes[1][PIPE_WRITE_END], obuf, obptr);
+                write(mapper_pipes[1][PIPE_WRITE_END], buff, ob_size);
                 break;
             case 2 :
-                write(mapper_pipes[2][PIPE_WRITE_END], obuf, obptr);
+                write(mapper_pipes[2][PIPE_WRITE_END], buff, ob_size);
                 break;
             case 3 : 
-                write(mapper_pipes[3][PIPE_WRITE_END], obuf, obptr);
+                write(mapper_pipes[3][PIPE_WRITE_END], buff, ob_size);
                 break;
             default :
                 printf("you did something wrong in send_lines_to_mappers loop");
