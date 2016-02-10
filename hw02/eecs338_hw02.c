@@ -53,6 +53,10 @@ int print_if_err(int syscall_val, const char* syscall_name) {
     }
 }
 
+void send_chars_to_reducers(void) {
+    printf("hello from send_chars_to_reducers\n");
+}
+
 void fork_mappers(void) {
     
 
@@ -63,10 +67,11 @@ void fork_mappers(void) {
     int i;
     for (i=0; i<NUM_OF_MAPPERS; i++) {
         pid_t mapper_pid = print_if_err(fork(), "fork");
+        close(mapper_pipes[i][PIPE_WRITE_END]);
         if (mapper_pid == 0) {
-            close(mapper_pipes[i][PIPE_WRITE_END]);
             rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             while(rlen > 0) {    
+                send_chars_to_reducers();
                 printf("read line from forked_mappers, p%d: %s\n", i, ibuf);
                 rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             }
@@ -76,12 +81,14 @@ void fork_mappers(void) {
 }
 
 void fork_reducers(void) {
-    
+    printf("hello from fork_reducers\n"); 
     int i;
     for (i = 0; i < NUM_OF_REDUCERS; i++) {
         pid_t reducer_pid = print_if_err(fork(), "fork");
         if (reducer_pid == 0) {
-               
+            while (1 == 1) {
+            
+            }       
         }
     }
 }
@@ -127,8 +134,8 @@ int main(void) {
     // Setup the mapper pipes
     create_mapper_pipes();
     create_reducer_pipes();
+    fork_reducers();
     fork_mappers();
-    //fork_reducers();
     send_lines_to_mappers();
 
     return 0;
