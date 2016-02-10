@@ -64,6 +64,7 @@ void fork_mappers(void) {
     for (i=0; i<NUM_OF_MAPPERS; i++) {
         pid_t mapper_pid = print_if_err(fork(), "fork");
         if (mapper_pid == 0) {
+            close(mapper_pipes[i][PIPE_WRITE_END]);
             rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             while(rlen > 0) {    
                 printf("read line from forked_mappers, p%d: %s\n", i, ibuf);
@@ -100,15 +101,19 @@ void send_lines_to_mappers(void) {
         switch(count) {
             case 0 :
                 write(mapper_pipes[0][PIPE_WRITE_END], buff, ob_size);
+                close(mapper_pipes[0][PIPE_WRITE_END]);
                 break;
             case 1 : 
                 write(mapper_pipes[1][PIPE_WRITE_END], buff, ob_size);
+                close(mapper_pipes[1][PIPE_WRITE_END]);
                 break;
             case 2 :
                 write(mapper_pipes[2][PIPE_WRITE_END], buff, ob_size);
+                close(mapper_pipes[2][PIPE_WRITE_END]);
                 break;
             case 3 : 
                 write(mapper_pipes[3][PIPE_WRITE_END], buff, ob_size);
+                close(mapper_pipes[3][PIPE_WRITE_END]);
                 break;
             default :
                 printf("you did something wrong in send_lines_to_mappers loop");
