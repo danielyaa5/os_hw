@@ -63,19 +63,15 @@ int print_if_err(int syscall_val, const char* syscall_name) {
 }
 
 void send_chars_to_reducers(char * line) {
-    printf("SEND_CHARS_TO_REDUCERS read: %s\n\n", line);
     int i;
     int ob_size = 1;
     int wlen = 0;
     for (i = 0; i < strlen(line); i++) {
         if (line[i] >= ALPHA_OFFSET && line[i] < ALPHA_OFFSET + LETTERS) {
             int pipe_num = line[i] - ALPHA_OFFSET;
-            printf("SENDING %c TO REDUCER PIPE %d\n", line[i], pipe_num);
             wlen = print_if_err(write(reducer_pipes[pipe_num][PIPE_WRITE_END], &line[i], ob_size), "write");
-            printf("WROTE %c to REDUCER %d\n", line[i], pipe_num);
         }
     }
-    printf("END OF SEND CHAR FOR LOOP");
     close_reducer_pipes(); 
 }
 
@@ -84,6 +80,16 @@ void close_reducer_pipes(void) {
     for (i = 0; i < NUM_OF_REDUCERS; i++) {
         print_if_err(close(reducer_pipes[i][PIPE_WRITE_END]), "close");
         print_if_err(close(reducer_pipes[i][PIPE_READ_END]), "close");
+    }
+}
+
+void close_reducers(int i) {
+    int j;
+    for (j = 0; j < NUM_OF_REDUCERS; j++) {
+        if (i != j) {
+            print_if_err(close(reducer_pipes[j][PIPE_READ_END]), "close");
+        }
+        print_if_err(close(reducer_pipes[j][PIPE_WRITE_END]), "close");
     }
 }
 
@@ -115,25 +121,23 @@ void fork_mappers(void) {
 }
 
 void fork_reducers(void) {
-    printf("HELLLOOOO FROM REDUCER\n"); 
     char ibuf[PIPE_BUFFER_SIZE]; // input pipe buffer
     int rlen = 0;
     int i;
     for (i = 0; i < NUM_OF_REDUCERS; i++) {
         pid_t reducer_pid = print_if_err(fork(), "fork");
         if (reducer_pid == 0) {
+            close_reducers(i);
             while (1) {
                 rlen = print_if_err(read(reducer_pipes[i][PIPE_READ_END], ibuf, 1), "read");
-                printf("RLEN = %d\n", rlen);
                 if (rlen > 0) {
-                   int letter_count_i = ibuf[0] - ALPHA_OFFSET;
-                   printf("REDUCER #%d, read %s, letter_count_i = %d\n", i, ibuf, letter_count_i);
-                   letter_count[letter_count_i]++;
+                   letter_count[i] += 1;
                 } else {
                     break;
                 }
             }       
-            printf("REDUCER EXITING\n");
+            char c = i + ALPHA_OFFSET;
+            printf("count %c: %d\n", c, letter_count[i]);
             _exit(0);
         }
     }
