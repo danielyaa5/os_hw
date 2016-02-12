@@ -1,4 +1,5 @@
 #include <sys/wait.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -53,8 +54,23 @@ int print_if_err(int syscall_val, const char* syscall_name) {
     }
 }
 
-void send_chars_to_reducers(void) {
-    printf("hello from send_chars_to_reducers\n");
+void send_chars_to_reducers(char * line) {
+    printf("send_chars_to_reducers read: %s\n\n", line);
+    int i;
+    int ob_size = 2;
+    for (i = 0; i < strlen(line); i++) {
+        if (line[i] >= ALPHA_OFFSET && line[i] < ALPHA_OFFSET + LETTERS) {
+            write(reducer_pipes[line[i]-ALPHA_OFFSET][PIPE_WRITE_END], line[i], ob_size);
+        }
+    }
+}
+
+void close_reducer_pipes(void) {
+    int i;
+    for (i = 0; i < NUM_OF_REDUCERS; i++) {
+        close(reducer_pipes[i][PIPE_WRITE_END]);
+        close(reducer_pipes[i][PIPE_READ_END]);
+    }
 }
 
 void fork_mappers(void) {
@@ -67,27 +83,41 @@ void fork_mappers(void) {
     int i;
     for (i=0; i<NUM_OF_MAPPERS; i++) {
         pid_t mapper_pid = print_if_err(fork(), "fork");
-        close(mapper_pipes[i][PIPE_WRITE_END]);
         if (mapper_pid == 0) {
-            rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
-            while(rlen > 0) {    
-                send_chars_to_reducers();
-                printf("read line from forked_mappers, p%d: %s\n", i, ibuf);
-                rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
+            int j;
+            for (j=0; j < NUM_OF_MAPPERS; j++) {
+                close(mapper_pipes[i][PIPE_WRITE_END]);
+                if (j != i) {
+                    close(mapper_pipes[j][PIPE_READ_END]);
+                }
             }
+            rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
+            send_chars_to_reducers(ibuf);
+            close_reducer_pipes(); 
+            printf("forked mapper%d read: %s\n\n", i, ibuf);
+            close(mapper_pipes[i][PIPE_READ_END]);
             _exit(0);
         }
     }
 }
 
 void fork_reducers(void) {
-    printf("hello from fork_reducers\n"); 
+    printf("HELLLOOOO FROM REDUCER\n"); 
+    char ibuf[PIPE_BUFFER_SIZE]; // input pipe buffer
+    int rlen = 0;
     int i;
     for (i = 0; i < NUM_OF_REDUCERS; i++) {
         pid_t reducer_pid = print_if_err(fork(), "fork");
         if (reducer_pid == 0) {
-            while (1 == 1) {
-            
+            printf("inside reducer child\n");
+            rlen = print_if_err(read(reducer_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
+            while (1) {
+                printf("hello from while reducer while loop");
+                /*
+                if (rlen > 0) {
+                   printf("reducer #%d, read %s\n", i, ibuf);
+                } 
+                */
             }       
         }
     }
@@ -103,24 +133,28 @@ void send_lines_to_mappers(void) {
     FILE *input_file = fopen("input.txt", "r");
     // read the input file line by line
     while(fgets(buff, BUFFER_SIZE, input_file) > 0) {
-        printf("read line from send_lin_to_mappers: %s\n", buff);
+        printf("send_lines_to_mappers read: %s\n\n", buff);
         ob_size = sizeof buff;
         switch(count) {
             case 0 :
                 write(mapper_pipes[0][PIPE_WRITE_END], buff, ob_size);
                 close(mapper_pipes[0][PIPE_WRITE_END]);
+                close(mapper_pipes[0][PIPE_READ_END]);
                 break;
             case 1 : 
                 write(mapper_pipes[1][PIPE_WRITE_END], buff, ob_size);
                 close(mapper_pipes[1][PIPE_WRITE_END]);
+                close(mapper_pipes[1][PIPE_READ_END]);
                 break;
             case 2 :
                 write(mapper_pipes[2][PIPE_WRITE_END], buff, ob_size);
                 close(mapper_pipes[2][PIPE_WRITE_END]);
+                close(mapper_pipes[2][PIPE_READ_END]);
                 break;
             case 3 : 
                 write(mapper_pipes[3][PIPE_WRITE_END], buff, ob_size);
                 close(mapper_pipes[3][PIPE_WRITE_END]);
+                close(mapper_pipes[3][PIPE_READ_END]);
                 break;
             default :
                 printf("you did something wrong in send_lines_to_mappers loop");
