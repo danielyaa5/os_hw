@@ -20,6 +20,14 @@ const int PIPE_BUFFER_SIZE = 1000;
 
 int mapper_pipes[4][2];
 int reducer_pipes[26][2];
+int letter_count[26];
+
+void init_letter_count(void) {
+    int i;
+    for (i =0; i < 26; i++) {
+        letter_count[i] = 0;
+    }
+}
 
 void pipe_wrapper(int pipefd[]) {
     int ret = pipe(pipefd);
@@ -64,16 +72,18 @@ void send_chars_to_reducers(char * line) {
             int pipe_num = line[i] - ALPHA_OFFSET;
             printf("SENDING %c TO REDUCER PIPE %d\n", line[i], pipe_num);
             wlen = print_if_err(write(reducer_pipes[pipe_num][PIPE_WRITE_END], &line[i], ob_size), "write");
-            printf("WROTE %s to REDUCER %d\n", line[i], i);
+            printf("WROTE %c to REDUCER %d\n", line[i], pipe_num);
         }
     }
+    printf("END OF SEND CHAR FOR LOOP");
+    close_reducer_pipes(); 
 }
 
 void close_reducer_pipes(void) {
     int i;
     for (i = 0; i < NUM_OF_REDUCERS; i++) {
-        close(reducer_pipes[i][PIPE_WRITE_END]);
-        close(reducer_pipes[i][PIPE_READ_END]);
+        print_if_err(close(reducer_pipes[i][PIPE_WRITE_END]), "close");
+        print_if_err(close(reducer_pipes[i][PIPE_READ_END]), "close");
     }
 }
 
@@ -97,7 +107,6 @@ void fork_mappers(void) {
             }
             rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             send_chars_to_reducers(ibuf);
-            close_reducer_pipes(); 
             //printf("forked mapper%d read: %s\n\n", i, ibuf);
             close(mapper_pipes[i][PIPE_READ_END]);
             _exit(0);
@@ -115,10 +124,17 @@ void fork_reducers(void) {
         if (reducer_pid == 0) {
             while (1) {
                 rlen = print_if_err(read(reducer_pipes[i][PIPE_READ_END], ibuf, 1), "read");
+                printf("RLEN = %d\n", rlen);
                 if (rlen > 0) {
-                   printf("REDUCER #%d, read %s\n", i, ibuf);
-                } 
+                   int letter_count_i = ibuf[0] - ALPHA_OFFSET;
+                   printf("REDUCER #%d, read %s, letter_count_i = %d\n", i, ibuf, letter_count_i);
+                   letter_count[letter_count_i]++;
+                } else {
+                    break;
+                }
             }       
+            printf("REDUCER EXITING\n");
+            _exit(0);
         }
     }
 }
@@ -165,6 +181,7 @@ void send_lines_to_mappers(void) {
 }
 
 int main(void) {
+    init_letter_count();
     // Setup the mapper pipes
     create_mapper_pipes();
     create_reducer_pipes();
@@ -174,3 +191,4 @@ int main(void) {
 
     return 0;
 }
+
