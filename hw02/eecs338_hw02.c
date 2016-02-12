@@ -55,12 +55,16 @@ int print_if_err(int syscall_val, const char* syscall_name) {
 }
 
 void send_chars_to_reducers(char * line) {
-    printf("send_chars_to_reducers read: %s\n\n", line);
+    printf("SEND_CHARS_TO_REDUCERS read: %s\n\n", line);
     int i;
-    int ob_size = 2;
+    int ob_size = 1;
+    int wlen = 0;
     for (i = 0; i < strlen(line); i++) {
         if (line[i] >= ALPHA_OFFSET && line[i] < ALPHA_OFFSET + LETTERS) {
-            write(reducer_pipes[line[i]-ALPHA_OFFSET][PIPE_WRITE_END], line[i], ob_size);
+            int pipe_num = line[i] - ALPHA_OFFSET;
+            printf("SENDING %c TO REDUCER PIPE %d\n", line[i], pipe_num);
+            wlen = print_if_err(write(reducer_pipes[pipe_num][PIPE_WRITE_END], &line[i], ob_size), "write");
+            printf("WROTE %s to REDUCER %d\n", line[i], i);
         }
     }
 }
@@ -94,7 +98,7 @@ void fork_mappers(void) {
             rlen = print_if_err(read(mapper_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             send_chars_to_reducers(ibuf);
             close_reducer_pipes(); 
-            printf("forked mapper%d read: %s\n\n", i, ibuf);
+            //printf("forked mapper%d read: %s\n\n", i, ibuf);
             close(mapper_pipes[i][PIPE_READ_END]);
             _exit(0);
         }
@@ -109,15 +113,11 @@ void fork_reducers(void) {
     for (i = 0; i < NUM_OF_REDUCERS; i++) {
         pid_t reducer_pid = print_if_err(fork(), "fork");
         if (reducer_pid == 0) {
-            printf("inside reducer child\n");
-            rlen = print_if_err(read(reducer_pipes[i][PIPE_READ_END], ibuf, 1000), "read");
             while (1) {
-                printf("hello from while reducer while loop");
-                /*
+                rlen = print_if_err(read(reducer_pipes[i][PIPE_READ_END], ibuf, 1), "read");
                 if (rlen > 0) {
-                   printf("reducer #%d, read %s\n", i, ibuf);
+                   printf("REDUCER #%d, read %s\n", i, ibuf);
                 } 
-                */
             }       
         }
     }
@@ -133,7 +133,7 @@ void send_lines_to_mappers(void) {
     FILE *input_file = fopen("input.txt", "r");
     // read the input file line by line
     while(fgets(buff, BUFFER_SIZE, input_file) > 0) {
-        printf("send_lines_to_mappers read: %s\n\n", buff);
+        //printf("send_lines_to_mappers read: %s\n\n", buff);
         ob_size = sizeof buff;
         switch(count) {
             case 0 :
