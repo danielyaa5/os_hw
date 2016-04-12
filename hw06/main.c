@@ -3,11 +3,27 @@
 void hydrogen(void);//executes hydrogen.c
 void carbon(void);//executes carbon.c
 
+struct threadInfo {
+	int threadId;
+};
+
+struct threadInfo hydrogenIDs[NUM_H];
+struct threadInfo carbonIDs[NUM_C];
+
 int main() {
 	int semid, shmid;//semaphore memory id, shared memory id
 	unsigned short seminit[NUM_SEMS];//used to initialize semaphores
 	struct common *shared;//pointer to shared data structure
 	union semun semctlarg;//used to initialize semaphores
+
+	pthread_t hydrogen[NUM_H];
+	pthread_t carbon[NUM_C];
+	pthread_attr_t attr;
+	void *exit_status;
+
+	//Creating a set of attributes to send to the threads
+	pthread_attr_init(&attr);
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
 	//get semaphore memory id
 	if ((semid = semget(SEMKEY, NUM_SEMS, IPC_CREAT|0777)) < 0) {
@@ -48,26 +64,38 @@ int main() {
 
 	// spawn 20 Hydrogens
 	for (int i=0; i<NUM_H; i++) {
-		if ((retVal = fork()) == 0) {
-			hydrogen();
-			fflush(stdout);
-			printf("New Hydrogen process created\n");
-			fflush(stdout);
-		} else if (retVal < 0) {
-			perror("fork");
+		// if ((retVal = fork()) == 0) {
+		// 	hydrogen();
+		// 	fflush(stdout);
+		// 	printf("New Hydrogen process created\n");
+		// 	fflush(stdout);
+		// } else if (retVal < 0) {
+		// 	perror("fork");
+		// 	exit(EXIT_FAILURE);
+		// }
+		hydrogenIDs[i].threadId = i;
+		retVal = pthread_create(&hydrogen[i], &attr, hydrogen, (void*) &hydrogenIDs[i]);
+		if (retVal == 0) {
+			perror("pthread_create");
 			exit(EXIT_FAILURE);
 		}
 	}
 
 	// spawn 5 Carbons
 	for (int i=0; i<NUM_C; i++) {
-		if ((retVal = fork()) == 0) {
-			carbon();
-			fflush(stdout);
-			printf("New Hydrogen process created\n");
-			fflush(stdout);
-		} else if (retVal < 0) {
-			perror("fork");
+		// if ((retVal = fork()) == 0) {
+		// 	carbon();
+		// 	fflush(stdout);
+		// 	printf("New Hydrogen process created\n");
+		// 	fflush(stdout);
+		// } else if (retVal < 0) {
+		// 	perror("fork");
+		// 	exit(EXIT_FAILURE);
+		// }
+		carbonIDs[i].threadId = i;
+		retVal = pthread_create(&carbon[i], &attr, carbon, (void*) &carbonIDs[i]);
+		if (retVal == 0) {
+			perror("pthread_create");
 			exit(EXIT_FAILURE);
 		}
 	}
