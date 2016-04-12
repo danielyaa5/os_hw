@@ -125,13 +125,13 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-void *carbon(void *) {
+void *carbon(void* arg) {
 	execl("carbon", "carbon", 0);
 	perror("execl");
 	exit(EXIT_FAILURE);//if exec returns there was an error
 }
 
-void *hydrogen(void *) {
+void *hydrogen(void* arg) {
 	execl("hydrogen", "hydrogen", 0);
 	perror("execl");
 	exit(EXIT_FAILURE);//if exec returns there was an error
