@@ -109,14 +109,14 @@ int main() {
 	// }
 
 	//Wait for all the threads to finish
-	for(i = 0; i < NUM_C; i++)
+	for(int i = 0; i < NUM_C; i++)
 	{
 		c_pthread_join(carbon[i], &exit_status);
 	}
 
-	for(i = 0; i < NUM_H; i++)
+	for(int i = 0; i < NUM_H; i++)
 	{
-		c_pthread_join(hyrdrogen[i], &exit_status);
+		c_pthread_join(hydrogen[i], &exit_status);
 	}
     
 
