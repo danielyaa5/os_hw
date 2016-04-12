@@ -38,6 +38,8 @@ struct common {
 	int waiting_H;
 };
 
+int retVal;
+
 void semWait(int semid, int semaphore) {
 	struct sembuf psembuf;
 
@@ -45,6 +47,11 @@ void semWait(int semid, int semaphore) {
 	psembuf.sem_flg = 0;
 	psembuf.sem_num = semaphore;
 	semop(semid,&psembuf,1);
+	if ((retVal = semop(semid,&psembuf,1)) != 0) {
+		perror("semop");
+		exit(EXIT_FAILURE);
+	}
+	
 	return;
 }
 
@@ -54,6 +61,11 @@ void semSignal(int semid, int semaphore) {
 	vsembuf.sem_op = 1;
 	vsembuf.sem_flg = 0;
 	vsembuf.sem_num = semaphore;
-	semop(semid,&vsembuf,1);
+	// semop(semid,&vsembuf,1);
+	if ((retVal = semop(semid,&vsembuf,1)) != 0) {
+		perror("semop");
+		exit(EXIT_FAILURE);
+	}
+	
 	return;
 }
