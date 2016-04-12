@@ -238,10 +238,7 @@ void *start_carbon(void* arg) {
 	if (shared->waiting_H >= 4) {
 		// release 4 H
 		for (int i=0; i < 4; i++) {
-			if ((sems = semSignal(semid, SH)) == 0) {
-				perror("semSignal");
-				exit(EXIT_FAILURE);
-			};
+			semSignal(semid, SH)) == 0);
 		}
 		shared->waiting_H -= 4;
 
@@ -250,24 +247,15 @@ void *start_carbon(void* arg) {
 		fflush(stdout);
 		// release lock on mutex
 		semSignal(semid, MUTEX);
-		if ((sems = semSignal(semid, MUTEX)) == 0) {
-			perror("semSignal");
-			exit(EXIT_FAILURE);
-		};
+
 		pthread_exit(NULL);
 	} else {
 		// not enough H is waiting, so wait at barrier
 		shared->waiting_C += 1;
 		// relaese lock on mutex
-		if ((sems = semSignal(semid, MUTEX)) == 0) {
-			perror("semSignal");
-			exit(EXIT_FAILURE);
-		};
+		semSignal(semid, MUTEX));
 
-		if ((sems = semWait(semid, SC)) == 0) {
-			perror("semWait");
-			exit(EXIT_FAILURE);
-		}
+		semWait(semid, SC)) == 0);
 	}
 	pthread_exit(NULL);
 }
