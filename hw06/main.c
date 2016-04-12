@@ -101,12 +101,25 @@ int main() {
 	}
 
 	//wait for all car processes to finish
-	for (int i = 0; i < 25; ++i) {
-		if (wait(0) < 0) {
-			perror("wait");
-			exit(EXIT_FAILURE);
-		}
+	// for (int i = 0; i < 25; ++i) {
+	// 	if (wait(0) < 0) {
+	// 		perror("wait");
+	// 		exit(EXIT_FAILURE);
+	// 	}
+	// }
+
+	//Wait for all the threads to finish
+	for(i = 0; i < NUM_C; i++)
+	{
+		c_pthread_join(carbon[i], &exit_status);
 	}
+
+	for(i = 0; i < NUM_H; i++)
+	{
+		c_pthread_join(hyrdrogen[i], &exit_status);
+	}
+    
+
 
 	printf("All atoms have crossed!\n");
 
