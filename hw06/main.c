@@ -201,7 +201,6 @@ void *start_hydrogen(void* arg) {
 }
 
 void *start_carbon(void* arg) {
-
 	struct common *shared;//pointer to shared data structure
 
 	int semid, shmid;//semaphore memory id, shared memory id
@@ -238,7 +237,7 @@ void *start_carbon(void* arg) {
 	if (shared->waiting_H >= 4) {
 		// release 4 H
 		for (int i=0; i < 4; i++) {
-			semSignal(semid, SH)) == 0);
+			semSignal(semid, SH);
 		}
 		shared->waiting_H -= 4;
 
@@ -247,15 +246,12 @@ void *start_carbon(void* arg) {
 		fflush(stdout);
 		// release lock on mutex
 		semSignal(semid, MUTEX);
-
-		pthread_exit(NULL);
 	} else {
 		// not enough H is waiting, so wait at barrier
 		shared->waiting_C += 1;
 		// relaese lock on mutex
-		semSignal(semid, MUTEX));
-
-		semWait(semid, SC)) == 0);
+		semSignal(semid, MUTEX);
+		semWait(semid, SC);
 	}
 	pthread_exit(NULL);
 }
