@@ -1,7 +1,7 @@
 #include "main.h"
 
-void *hydrogen(void *);//executes hydrogen.c
-void *carbon(void *);//executes carbon.c
+void *start_hydrogen(void *);//executes hydrogen.c
+void *start_carbon(void *);//executes carbon.c
 
 struct threadInfo {
 	int threadId;
@@ -74,7 +74,7 @@ int main() {
 		// 	exit(EXIT_FAILURE);
 		// }
 		hydrogenIDs[i].threadId = i;
-		retVal = pthread_create(&hydrogen[i], &attr, hydrogen, (void*) &hydrogenIDs[i]);
+		retVal = pthread_create(&hydrogen[i], &attr, start_hydrogen, (void*) &hydrogenIDs[i]);
 		if (retVal == 0) {
 			perror("pthread_create");
 			exit(EXIT_FAILURE);
@@ -93,7 +93,7 @@ int main() {
 		// 	exit(EXIT_FAILURE);
 		// }
 		carbonIDs[i].threadId = i;
-		retVal = pthread_create(&carbon[i], &attr, carbon, (void*) &carbonIDs[i]);
+		retVal = pthread_create(&carbon[i], &attr, start_carbon, (void*) &carbonIDs[i]);
 		if (retVal == 0) {
 			perror("pthread_create");
 			exit(EXIT_FAILURE);
@@ -125,13 +125,13 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-void *carbon(void* arg) {
+void *start_carbon(void* arg) {
 	execl("carbon", "carbon", 0);
 	perror("execl");
 	exit(EXIT_FAILURE);//if exec returns there was an error
 }
 
-void *hydrogen(void* arg) {
+void *start_hydrogen(void* arg) {
 	execl("hydrogen", "hydrogen", 0);
 	perror("execl");
 	exit(EXIT_FAILURE);//if exec returns there was an error
