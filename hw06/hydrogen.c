@@ -5,7 +5,7 @@ struct common *shared;//pointer to shared data structure
 void printVariables(void);
 
 int main(int argc, char const *argv[]) {
-	int semid, shmid, sems, semw;//semaphore memory id, shared memory id
+	int semid, shmid;//semaphore memory id, shared memory id
 
 	int pid = getpid();
 
@@ -28,11 +28,7 @@ int main(int argc, char const *argv[]) {
 	}
 
 	// acquire lock on mutex before accessing shared memory
-	if ((sems = semWait(semid, MUTEX)) == 0) {
-		perror("semWait");
-		exit(EXIT_FAILURE);
-	}
-
+	semWait(semid, MUTEX);
 
 	fflush(stdout);
 	printf("Hydrogen atom, pid %d, arrives at barrier\n", pid);
@@ -47,33 +43,19 @@ int main(int argc, char const *argv[]) {
 			semSignal(semid, SH);
 		}
 		shared->waiting_H -= 3;
-		if ((sems = semSignal(semid, SC)) == 0) {
-			perror("semSignal");
-			exit(EXIT_FAILURE);
-		};
+		semSignal(semid, SC); // release 1 C
 		shared->waiting_C -= 1;
 
 		fflush(stdout);
 		printf("\nHello from %d, 1 CH4 molecule has xed the barrier\n\n", pid);
 		fflush(stdout);
 		// release lock on mutex
-		if ((sems = semSignal(semid, MUTEX)) == 0) {
-			perror("semSignal");
-			exit(EXIT_FAILURE);
-		};
-		pthread_exit(NULL);
+		semSignal(semid, MUTEX);
 	} else {
 		// not enough C or H is waiting, so wait at barrier
 		shared->waiting_H += 1;
 		// relaese lock on mutex
-		if ((sems = semSignal(semid, MUTEX)) == 0) {
-			perror("semSignal");
-			exit(EXIT_FAILURE);
-		};
-
-		if ((sems = semWait(semid, SH)) == 0) {
-			perror("semWait");
-			exit(EXIT_FAILURE);
-		}
+		semSignal(semid, MUTEX);
+		semWait(semid, SH);
 	}
 }
