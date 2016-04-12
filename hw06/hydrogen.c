@@ -5,8 +5,6 @@ struct common *shared;//pointer to shared data structure
 void printVariables(void);
 
 int main(int argc, char const *argv[]) {
-	printf("starting Hydrogen\n");
-	
 	int semid, shmid;//semaphore memory id, shared memory id
 
 	int pid = getpid();
