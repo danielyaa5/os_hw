@@ -111,12 +111,12 @@ int main() {
 	//Wait for all the threads to finish
 	for(int i = 0; i < NUM_C; i++)
 	{
-		c_pthread_join(carbon[i], &exit_status);
+		pthread_join(carbon[i], &exit_status);
 	}
 
 	for(int i = 0; i < NUM_H; i++)
 	{
-		c_pthread_join(hydrogen[i], &exit_status);
+		pthread_join(hydrogen[i], &exit_status);
 	}
     
 
