@@ -1,7 +1,7 @@
 #include "main.h"
 
-void *hydrogen(void);//executes hydrogen.c
-void *carbon(void);//executes carbon.c
+void *hydrogen(void *);//executes hydrogen.c
+void *carbon(void *);//executes carbon.c
 
 struct threadInfo {
 	int threadId;
@@ -125,13 +125,13 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-void *carbon(void) {
+void *carbon(void *) {
 	execl("carbon", "carbon", 0);
 	perror("execl");
 	exit(EXIT_FAILURE);//if exec returns there was an error
 }
 
-void *hydrogen(void) {
+void *hydrogen(void *) {
 	execl("hydrogen", "hydrogen", 0);
 	perror("execl");
 	exit(EXIT_FAILURE);//if exec returns there was an error
