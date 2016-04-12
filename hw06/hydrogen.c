@@ -26,16 +26,6 @@ int main(int argc, char const *argv[]) {
 		perror("shmat");
 		exit(EXIT_FAILURE);
 	}
-//////////////////////////////
-	if ((sems = semSignal(semid, MUTEX)) == 0) {
-		perror("semSignal");
-		exit(EXIT_FAILURE);
-	};
-
-	if ((sems = semWait(semid, SC)) == 0) {
-		perror("semWait");
-		exit(EXIT_FAILURE);
-	}
 
 	// acquire lock on mutex before accessing shared memory
 	if ((sems = semWait(semid, MUTEX)) == 0) {
