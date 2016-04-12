@@ -81,8 +81,6 @@ int main() {
 		}
 	}
 
-	printf("this line reached\n");
-
 	// spawn 5 Carbons
 	for (int i=0; i<NUM_C; i++) {
 		// if ((retVal = fork()) == 0) {

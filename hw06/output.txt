@@ -1,0 +1,69 @@
+THE PROGRAM IS STARTING
+
+this line reached
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 1 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 2 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 3 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 4 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 5 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 6 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 7 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 8 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 9 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 10 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 11 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 12 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 13 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 14 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 15 Hydrogens and 0 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 16 Hydrogens and 0 Carbons waiting
+Carbon atom, pid 8194, arrives at barrier
+Currently 16 Hydrogens and 1 Carbons waiting
+
+Hello from 8194, 1 CH4 molecule has xed the barrier
+
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 13 Hydrogens and 0 Carbons waiting
+Carbon atom, pid 8194, arrives at barrier
+Currently 13 Hydrogens and 1 Carbons waiting
+
+Hello from 8194, 1 CH4 molecule has xed the barrier
+
+Carbon atom, pid 8194, arrives at barrier
+Currently 9 Hydrogens and 1 Carbons waiting
+
+Hello from 8194, 1 CH4 molecule has xed the barrier
+
+Carbon atom, pid 8194, arrives at barrier
+Currently 5 Hydrogens and 1 Carbons waiting
+
+Hello from 8194, 1 CH4 molecule has xed the barrier
+
+Carbon atom, pid 8194, arrives at barrier
+Currently 1 Hydrogens and 1 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 2 Hydrogens and 1 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 3 Hydrogens and 1 Carbons waiting
+Hydrogen atom, pid 8194, arrives at barrier
+Currently 4 Hydrogens and 1 Carbons waiting
+
+Hello from 8194, 1 CH4 molecule has xed the barrier
+
+All atoms have crossed!
