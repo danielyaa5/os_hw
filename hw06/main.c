@@ -1,7 +1,7 @@
 #include "main.h"
 
-void hydrogen(void);//executes hydrogen.c
-void carbon(void);//executes carbon.c
+void *hydrogen(void);//executes hydrogen.c
+void *carbon(void);//executes carbon.c
 
 struct threadInfo {
 	int threadId;
