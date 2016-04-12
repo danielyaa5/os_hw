@@ -227,6 +227,7 @@ void *start_carbon(void* arg) {
 	}
 
 	// acquire lock on mutex before accessing shared memory
+	printf("test\n");
 	semWait(semid, MUTEX);
 
 	fflush(stdout);
