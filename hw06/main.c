@@ -225,10 +225,10 @@ void *start_carbon(void* arg) {
 		perror("shmat");
 		exit(EXIT_FAILURE);
 	}
-
+	printf("test1\n");
 	// acquire lock on mutex before accessing shared memory
-	// printf("test\n");
 	semWait(semid, MUTEX);
+	printf("test2\n");
 
 	fflush(stdout);
 	printf("Hydrogen atom, pid %d, arrives at barrier\n", pid);
