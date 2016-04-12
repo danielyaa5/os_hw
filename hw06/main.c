@@ -75,7 +75,7 @@ int main() {
 		// }
 		hydrogenIDs[i].threadId = i;
 		retVal = pthread_create(&hydrogen[i], &attr, start_hydrogen, (void*) &hydrogenIDs[i]);
-		if (retVal == 0) {
+		if (retVal != 0) {
 			perror("pthread_create");
 			exit(EXIT_FAILURE);
 		}
@@ -96,7 +96,7 @@ int main() {
 		// }
 		carbonIDs[i].threadId = i;
 		retVal = pthread_create(&carbon[i], &attr, start_carbon, (void*) &carbonIDs[i]);
-		if (retVal == 0) {
+		if (retVal != 0) {
 			perror("pthread_create");
 			exit(EXIT_FAILURE);
 		}
