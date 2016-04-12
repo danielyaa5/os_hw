@@ -141,7 +141,7 @@ int main() {
 }
 
 void *start_hydrogen(void* arg) {
-	printf("start_hydrogen called\n");
+	// printf("start_hydrogen called\n");
 	struct common *shared;//pointer to shared data structure
 
 	int semid, shmid;//semaphore memory id, shared memory id
@@ -201,7 +201,7 @@ void *start_hydrogen(void* arg) {
 }
 
 void *start_carbon(void* arg) {
-	printf("start_carbon called\n");
+	// printf("start_carbon called\n");
 	struct common *shared;//pointer to shared data structure
 
 	int semid, shmid;//semaphore memory id, shared memory id
@@ -227,7 +227,7 @@ void *start_carbon(void* arg) {
 	}
 
 	// acquire lock on mutex before accessing shared memory
-	printf("test\n");
+	// printf("test\n");
 	semWait(semid, MUTEX);
 
 	fflush(stdout);
