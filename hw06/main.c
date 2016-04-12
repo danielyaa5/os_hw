@@ -166,10 +166,8 @@ void *start_hydrogen(void* arg) {
 		exit(EXIT_FAILURE);
 	}
 
-	printf("test1\n");
 	// acquire lock on mutex before accessing shared memory
 	semWait(semid, MUTEX);
-	printf("test2\n");
 
 	fflush(stdout);
 	printf("Hydrogen atom, pid %d, arrives at barrier\n", pid);
@@ -206,7 +204,7 @@ void *start_carbon(void* arg) {
 
 	struct common *shared;//pointer to shared data structure
 
-	int semid, shmid, semw, sems;//semaphore memory id, shared memory id
+	int semid, shmid;//semaphore memory id, shared memory id
 
 	int pid = getpid();
 
@@ -229,10 +227,7 @@ void *start_carbon(void* arg) {
 	}
 
 	// acquire lock on mutex before accessing shared memory
-	if ((sems = semWait(semid, MUTEX)) == 0) {
-		perror("semWait");
-		exit(EXIT_FAILURE);
-	}
+	semWait(semid, MUTEX);
 
 	fflush(stdout);
 	printf("Carbon atom, pid %d, arrives at barrier\n", pid);
