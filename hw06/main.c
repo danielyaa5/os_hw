@@ -203,9 +203,10 @@ void *start_hydrogen(void* arg) {
 }
 
 void *start_carbon(void* arg) {
+
 	struct common *shared;//pointer to shared data structure
 
-	int semid, shmid;//semaphore memory id, shared memory id
+	int semid, shmid, semw, sems;//semaphore memory id, shared memory id
 
 	int pid = getpid();
 
@@ -228,35 +229,50 @@ void *start_carbon(void* arg) {
 	}
 
 	// acquire lock on mutex before accessing shared memory
-	semWait(semid, MUTEX);
+	if ((sems = semWait(semid, MUTEX)) == 0) {
+		perror("semWait");
+		exit(EXIT_FAILURE);
+	}
 
 	fflush(stdout);
-	printf("Hydrogen atom, pid %d, arrives at barrier\n", pid);
-	printf("Currently %d Hydrogens and %d Carbons waiting\n", shared->waiting_H + 1, shared->waiting_C);
+	printf("Carbon atom, pid %d, arrives at barrier\n", pid);
+	printf("Currently %d Hydrogens and %d Carbons waiting\n", shared->waiting_H, shared->waiting_C + 1);
 	fflush(stdout);
 
-	// if enough C and H is waiting, continue past barrier
-	if (shared->waiting_H >= 3 
-		&& shared->waiting_C >= 1) {
-		// release 3 H
-		for (int i=0; i < 3; i++) {
-			semSignal(semid, SH);
+	// if enough H is waiting, continue past barrier
+	if (shared->waiting_H >= 4) {
+		// release 4 H
+		for (int i=0; i < 4; i++) {
+			if ((sems = semSignal(semid, SH)) == 0) {
+				perror("semSignal");
+				exit(EXIT_FAILURE);
+			};
 		}
-		shared->waiting_H -= 3;
-		semSignal(semid, SC); // release 1 C
-		shared->waiting_C -= 1;
+		shared->waiting_H -= 4;
 
 		fflush(stdout);
 		printf("\nHello from %d, 1 CH4 molecule has xed the barrier\n\n", pid);
 		fflush(stdout);
 		// release lock on mutex
 		semSignal(semid, MUTEX);
+		if ((sems = semSignal(semid, MUTEX)) == 0) {
+			perror("semSignal");
+			exit(EXIT_FAILURE);
+		};
+		pthread_exit(NULL);
 	} else {
-		// not enough C or H is waiting, so wait at barrier
-		shared->waiting_H += 1;
+		// not enough H is waiting, so wait at barrier
+		shared->waiting_C += 1;
 		// relaese lock on mutex
-		semSignal(semid, MUTEX);
-		semWait(semid, SH);
+		if ((sems = semSignal(semid, MUTEX)) == 0) {
+			perror("semSignal");
+			exit(EXIT_FAILURE);
+		};
+
+		if ((sems = semWait(semid, SC)) == 0) {
+			perror("semWait");
+			exit(EXIT_FAILURE);
+		}
 	}
 	pthread_exit(NULL);
 }
