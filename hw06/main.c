@@ -141,6 +141,7 @@ int main() {
 }
 
 void *start_hydrogen(void* arg) {
+	printf("start_hydrogen called");
 	struct common *shared;//pointer to shared data structure
 
 	int semid, shmid;//semaphore memory id, shared memory id
@@ -200,6 +201,7 @@ void *start_hydrogen(void* arg) {
 }
 
 void *start_carbon(void* arg) {
+	printf("start_carbon called");
 	struct common *shared;//pointer to shared data structure
 
 	int semid, shmid;//semaphore memory id, shared memory id
