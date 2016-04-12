@@ -108,6 +108,7 @@ int main() {
 	// 	}
 	// }
 
+	sleep(2);
 	//Wait for all the threads to finish
 	for(int i = 0; i < NUM_C; i++)
 	{
