@@ -10,6 +10,7 @@ int main(int argc, char **argv) {
     //rpc arguments struct to pass to server
 	struct rpc_args *args = malloc(sizeof(struct rpc_args));
 
+	printf("running client\n");
 	//GET message
 	if (strcmp(argv[2], "GET") == 0) {
 
