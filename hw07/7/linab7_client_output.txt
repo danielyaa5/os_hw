@@ -1,0 +1,53 @@
+Script started on Thu Apr 28 07:38:32 2016
+]0;djy18@eecslinab7: ~/os_hw/hw07/7djy18@eecslinab7:~/os_hw/hw07/7$ ./database_client eecslinab3.case.edugit status[K./database_client eecslinab3.case.edu
+running client, main
+hostname is eecslinab7
+The process id is 20586
+The unique id is eecslinab720586
+Client PUT: "Life, loathe it or ignore it, you can't like it."
+		-- Marvin, "Hitchhiker's G
+Succssful upload
+Client PUT: Tomorrow, this will be part of the unchangeable past but fortunately,
+it can st
+Succssful upload
+Client PUT: You are always busy.
+e part of the unchangeable past but fortunately,
+it can st
+Succssful upload
+Client PUT: You definitely intend to start living sometime soon.
+but fortunately,
+it can st
+Succssful upload
+Client PUT: Long life is in store for you.
+living sometime soon.
+but fortunately,
+it can st
+Succssful upload
+Client GET
+Data retrieved: Increased knowledge will help you now.  Have mate's phone bugged.
+^· Jr·°öt·¸Xr
+Client GET
+Data retrieved: Many pages make a thick book, except for pocket Bibles which are on very
+very t
+Client GET
+Data retrieved: All things that are, are with more spirit chased than enjoyed.
+		-- Shakespeare
+Client GET
+Data retrieved: You will be recognized and honored as a community leader.
+yed.
+		-- Shakespeare
+Client GET
+Data retrieved: You seek to shield those you love and you like the role of the provider.
+speare
+Client GET
+Data retrieved: No messages available
+Client GET
+Data retrieved: No messages available
+Client GET
+Data retrieved: No messages available
+Client GET
+Data retrieved: No messages available
+Client GET
+Data retrieved: No messages available
+]0;djy18@eecslinab7: ~/os_hw/hw07/7djy18@eecslinab7:~/os_hw/hw07/7$ exit
+Script done on Thu Apr 28 07:39:02 2016
