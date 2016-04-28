@@ -1,11 +1,7 @@
-struct message {
-	char content[2000];
-};
-
 struct rpc_args {
 	char action[20];
-	int id;
-	struct message message;
+	char id[80];
+    char message[80];
 };
 
 program DATABASE {

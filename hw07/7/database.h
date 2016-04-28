@@ -14,15 +14,10 @@ extern "C" {
 #endif
 
 
-struct message {
-	char content[2000];
-};
-typedef struct message message;
-
 struct rpc_args {
 	char action[20];
-	int id;
-	struct message message;
+	char id[80];
+	char message[80];
 };
 typedef struct rpc_args rpc_args;
 
@@ -45,11 +40,9 @@ extern int database_1_freeresult ();
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_message (XDR *, message*);
 extern  bool_t xdr_rpc_args (XDR *, rpc_args*);
 
 #else /* K&R C */
-extern bool_t xdr_message ();
 extern bool_t xdr_rpc_args ();
 
 #endif /* K&R C */
