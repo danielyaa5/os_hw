@@ -66,26 +66,22 @@ void insert_message(char *id, char *message) {
 }
 
 char *get_message(char *id) {
-    char *message;
-    char *not_found =(char *)  malloc( sizeof(char) * 20 );
-    not_found = "No messages available";
+    char *message = (char *)  malloc( sizeof(char) * 80 );
+    char *not_found=(char *)  malloc( sizeof(char) * 20 );
+    strcpy(not_found, "No messages available");
     struct server_message *curr_msg = first_message;
-    struct server_message *prev_msg = first_message;
+    struct server_message *prev_msg = NULL;
 
-    if (curr_msg != NULL && (strcmp(curr_msg->id, id) != 0)) {
-        strcpy (message, curr_msg->message);
-        //Remove message
-        first_message = NULL;
-        return message;
-    }
+    while (curr_msg->next_msg != NULL) {
 
-    curr_msg = curr_msg->next_msg;
-
-    while (curr_msg != NULL) {
         if (strcmp(curr_msg->id, id) != 0) {
             strcpy (message, curr_msg->message);
             //Remove message
-            prev_msg->next_msg = curr_msg->next_msg;
+            if (prev_msg == NULL) {
+                first_message = curr_msg->next_msg;
+            } else {
+                prev_msg->next_msg = curr_msg->next_msg;
+            }
             return message;
         } else {
             prev_msg = curr_msg;
