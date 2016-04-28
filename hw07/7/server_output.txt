@@ -1,0 +1,80 @@
+Script started on Thu Apr 28 07:37:00 2016
+]0;djy18@eecslinab3: ~/os_hw/hw07/7djy18@eecslinab3:~/os_hw/hw07/7$ ./database_client eecslinab3.case.edujobs[K./database_client eecslinab3.case.edujobs[K./database_client eecslinab3.case.edugit status[K./database_client eecslinab3.case.edufg 4[Kjobsgit pushcommit -m "I think this might be it folks"add .[K./database_client eecslinab3.case.edu[Kfg 4[K./database_client        server 
+User eecslinab32222, is putting a message, Increased knowledge will help you now.  Have mate's phone bugged.
+^· Jr·°öt·¸Xr
+Current time is Thu Apr 28 07:37:46 2016
+User eecslinab32222, is putting a message, Many pages make a thick book, except for pocket Bibles which are on very
+very t
+Current time is Thu Apr 28 07:37:47 2016
+User eecslinab32222, is putting a message, All things that are, are with more spirit chased than enjoyed.
+		-- Shakespeare
+Current time is Thu Apr 28 07:37:48 2016
+User eecslinab32222, is putting a message, You will be recognized and honored as a community leader.
+yed.
+		-- Shakespeare
+Current time is Thu Apr 28 07:37:49 2016
+User eecslinab32222, is putting a message, You seek to shield those you love and you like the role of the provider.
+speare
+Current time is Thu Apr 28 07:37:50 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:37:56 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:37:57 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:37:58 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:37:59 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:38:00 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:38:01 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:38:02 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:38:03 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:38:04 2016
+User eecslinab32222, is requesting a message from the server
+Current time is Thu Apr 28 07:38:05 2016
+User eecslinab720586, is putting a message, "Life, loathe it or ignore it, you can't like it."
+		-- Marvin, "Hitchhiker's G
+Current time is Thu Apr 28 07:38:39 2016
+User eecslinab720586, is putting a message, Tomorrow, this will be part of the unchangeable past but fortunately,
+it can st
+Current time is Thu Apr 28 07:38:40 2016
+User eecslinab720586, is putting a message, You are always busy.
+e part of the unchangeable past but fortunately,
+it can st
+Current time is Thu Apr 28 07:38:41 2016
+User eecslinab720586, is putting a message, You definitely intend to start living sometime soon.
+but fortunately,
+it can st
+Current time is Thu Apr 28 07:38:42 2016
+User eecslinab720586, is putting a message, Long life is in store for you.
+living sometime soon.
+but fortunately,
+it can st
+Current time is Thu Apr 28 07:38:43 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:49 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:50 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:51 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:52 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:53 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:54 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:55 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:56 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:57 2016
+User eecslinab720586, is requesting a message from the server
+Current time is Thu Apr 28 07:38:58 2016
+^C
+]0;djy18@eecslinab3: ~/os_hw/hw07/7djy18@eecslinab3:~/os_hw/hw07/7$ exit
+Script done on Thu Apr 28 07:40:02 2016

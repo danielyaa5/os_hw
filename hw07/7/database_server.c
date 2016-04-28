@@ -15,6 +15,8 @@ struct server_message {
 //head of the list
 static struct server_message *first_message = NULL;
 
+void print_time();
+
 //insert the message into the specified user's messages
 void insert_message(char *id, char *message);
 //retrieve the message from the specified user
@@ -23,7 +25,6 @@ char *get_message(char *id);
 rpc_args *
 action_1_svc(struct rpc_args *args, struct svc_req *rqstp)
 {
-    printf("Running server function, action: %s\n", args->action);
 
 	rpc_args *result = malloc(sizeof(struct rpc_args));
 
@@ -33,11 +34,12 @@ action_1_svc(struct rpc_args *args, struct svc_req *rqstp)
  
     if (strcmp(args->action, "GET") == 0) {
         printf("User %s, is requesting a message from the server\n", args->id);
+        print_time();
         char *got_msg = get_message(args->id);
-        printf("Retrieved message for %s: %s", args->id, got_msg);
         strcpy(result->message, got_msg);
     } else if (strcmp(args->action, "PUT") == 0) {
         printf("User %s, is putting a message, %s\n", args->id, args->message);
+        print_time();
         insert_message(args->id, args->message);
     }
 
@@ -67,11 +69,10 @@ void insert_message(char *id, char *message) {
 
 char *get_message(char *id) {
     char *message = (char *)  malloc( sizeof(char) * 80 );
-    char *not_found=(char *)  malloc( sizeof(char) * 20 );
-    strcpy(not_found, "No messages available");
     struct server_message *curr_msg = first_message;
     struct server_message *prev_msg = NULL;
 
+    if (curr_msg == NULL) return strdup("No messages available");
     while (curr_msg->next_msg != NULL) {
 
         if (strcmp(curr_msg->id, id) != 0) {
@@ -88,5 +89,17 @@ char *get_message(char *id) {
             curr_msg = curr_msg->next_msg;
         }
     }
-    return not_found;
+    return strdup("No messages available");
+}
+
+void print_time() {
+    time_t current_time;
+    char* c_time_string;
+
+    current_time = time(NULL);
+
+    /* Convert to local time format. */
+    c_time_string = ctime(&current_time);
+
+    printf("Current time is %s", c_time_string);
 }
